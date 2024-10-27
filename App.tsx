@@ -4,7 +4,7 @@
  *
  * @format
  */
-
+//Import module dari react dan react native
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -37,7 +37,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: 'green', //diubah warna titlenya
           },
         ]}>
         {title}
@@ -76,18 +76,17 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="Nama">
+            Hayyu Rahmayani Puspitasari
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="NIM">
+            22/497739/SV/21157
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
+          <Section title="Kelas">
+            A
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
+          <Section title="Tautan Media Sosial">
+            Berikut beberapa tautan yang dapat dihubungi:
           </Section>
           <LearnMoreLinks />
         </View>
