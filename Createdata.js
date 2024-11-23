@@ -5,7 +5,7 @@ import { SafeAreaView, Text, View, ScrollView, TextInput, Button, StyleSheet } f
 const Createdata = () => {
 
     const jsonUrl = 'http://10.0.2.2:3000/mahasiswa'; //api yang digunakan emulator untuk mengakses localhost komputer
-    const [first_name, setFirstName] = useState('');
+    const [first_name, setFirstName] = useState(''); 
     const [last_name, setLastName] = useState('');
     const [kelas, setKelas] = useState('');
     const [gender, setGender] = useState('');
@@ -52,8 +52,7 @@ const Createdata = () => {
             <TextInput style={styles.input} placeholder="Jenis Kelamin" value={gender} onChangeText={(value) => setGender(value)} />
             <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={(value) => setEmail(value)} />
             <Button title="Simpan" style={styles.button} onPress={submit} />
-           </ScrollView>
-           
+           </ScrollView> 
          </View>
         </SafeAreaView>
        )
@@ -86,4 +85,4 @@ const styles = StyleSheet.create({
       button: {
         marginVertical: 10,
       }
-     })     
+})     
