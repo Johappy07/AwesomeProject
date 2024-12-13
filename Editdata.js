@@ -58,7 +58,7 @@ const Createdata = () => {
               setEmail('');
               refreshPage();
               FlatList.refresh();
-            })
+            }) 
         }
        
 
