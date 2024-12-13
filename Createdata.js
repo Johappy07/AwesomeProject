@@ -4,7 +4,7 @@ import { SafeAreaView, Text, View, ScrollView, TextInput, Button, StyleSheet } f
 
 const Createdata = () => {
 
-    const jsonUrl = 'http://10.0.2.2:3000/mahasiswa'; //api yang digunakan emulator untuk mengakses localhost komputer
+    const jsonUrl = 'http://10.0.2.2:3001/mahasiswa'; //api yang digunakan emulator untuk mengakses localhost komputer
     const [first_name, setFirstName] = useState(''); 
     const [last_name, setLastName] = useState('');
     const [kelas, setKelas] = useState('');
@@ -19,7 +19,7 @@ const Createdata = () => {
           kelas: kelas,
           gender: gender,
         };
-        fetch('http://10.0.2.2:3000/mahasiswa', {
+        fetch('http://10.0.2.2:3001/mahasiswa', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
