@@ -23,7 +23,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    fetch('http://10.0.2.2:3001/mahasiswa')
+    fetch('http://192.168.8.101:3000/mahasiswa')
       .then((response) => response.json())
       .then((data) => {
         const cleanedData = data.map((mahasiswa) => {

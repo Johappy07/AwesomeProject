@@ -4,7 +4,7 @@ import { SafeAreaView, Text, View, ScrollView, TextInput, Button, StyleSheet } f
 
 const Createdata = () => {
 
-    const jsonUrl = 'http://10.0.2.2:3001/mahasiswa'; //api yang digunakan emulator untuk mengakses localhost komputer
+    const jsonUrl = 'http://192.168.8.101:3000/mahasiswa'; //api yang digunakan emulator untuk mengakses localhost komputer
     const [first_name, setFirstName] = useState(''); 
     const [last_name, setLastName] = useState('');
     const [kelas, setKelas] = useState('');
@@ -19,7 +19,7 @@ const Createdata = () => {
           kelas: kelas,
           gender: gender,
         };
-        fetch('http://10.0.2.2:3001/mahasiswa', {
+        fetch('http://192.168.8.101:3000/mahasiswa', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -44,7 +44,7 @@ const Createdata = () => {
     return (
         <SafeAreaView>
          <View>
-          <Text style={styles.title}>Tambah Data Mahasiswa</Text>
+          <Text style={styles.title}>Isi Formulir Pengaduan</Text>
            <ScrollView style={styles.form}>
             <TextInput style={styles.input} placeholder="Nama Depan" value={first_name} onChangeText={(value) => setFirstName(value)} />
             <TextInput style={styles.input} placeholder="Nama Belakang" value={last_name} onChangeText={(value) => setLastName(value)} />

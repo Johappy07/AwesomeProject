@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 const Createdata = () => {
-  const jsonUrl = 'http://10.0.2.2:3001/mahasiswa';
+  const jsonUrl = 'http://192.168.8.101:3000/mahasiswa';
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [kelas, setKelas] = useState('');

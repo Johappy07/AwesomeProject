@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './App';
 import Mahasiswa from './Mahasiswa';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faMap, faUser} from '@fortawesome/free-solid-svg-icons';
 import { faUserGraduate } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { WebView } from 'react-native-webview';
 import Createdata from './Createdata';
 import Datamahasiswa from './Listdata';
 import Editdata from './Editdata';
+import Map from './App';
 function HomeScreen() {
   return (
     <Createdata />
@@ -29,6 +30,12 @@ function DataMahasiswaScreen() {
 function EditScreen() {
   return (
     <Editdata/>
+  );
+}
+
+function MapScreen() {
+  return (
+    <Map/>
   );
 }
 
@@ -51,6 +58,11 @@ export default function App() {
       <Tab.Screen name="Edit" component={EditScreen}  options={{ headerShown: false,
         tabBarIcon: ({ color }) => (
           <FontAwesomeIcon icon={faUserPen} color={color} size={20} />
+        ),}}/>
+      
+      <Tab.Screen name="Map" component={MapScreen}  options={{ headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <FontAwesomeIcon icon={faMap} color={color} size={20} />
         ),}}/>
 
       </Tab.Navigator>
