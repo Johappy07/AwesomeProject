@@ -16,6 +16,7 @@ import {
   faVolcano,
   faUserNurse,
   faInfoCircle,
+  faShield,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage() {
@@ -58,6 +59,20 @@ export default function HomePage() {
             style={styles.icon}
           />
           <Text style={styles.contactText}>Layanan Gawat Darurat Kesehatan</Text>
+        </TouchableOpacity>
+        
+        {/* Health Emergency Service */}
+        <TouchableOpacity
+          style={[styles.contactButton, { backgroundColor: 'rgb(197, 197, 52)' }]} // Green for health
+          onPress={() => Linking.openURL('tel:0218842752')}
+        >
+          <FontAwesomeIcon
+            icon={faShield}
+            size={20}
+            color="white"
+            style={styles.icon}
+          />
+          <Text style={styles.contactText}>Layanan Keamanan </Text>
         </TouchableOpacity>
 
         {/* Fire Department */}

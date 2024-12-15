@@ -16,12 +16,11 @@ Tujuan utama dari aplikasi ini adalah untuk membantu pemerintah Kota Bekasi dala
 - **Icon** dari FontAwesome
 
 ## Tangkapan Layar Komponen Penting Produk
-- <img src="./assets/5.jpg" width="200px" alt="Home Page">
-- <img src="./assets/4.jpg" width="200px" alt="List Page">
-- <img src="./assets/3.jpg" width="200px" alt="Edit Page">
-- <img src="./assets/2.jpg" width="200px" alt="Map">
-- <img src="./assets/1.jpg" width="200px" alt="Profile">
-
+<img src="./assets/6.jpg" width="200px" alt="Home Page"> Pada Home Page, pengguna akan melihat tampilan awal aplikasi yang menyediakan beberapa tombol untuk mengakses layanan darurat, seperti layanan kesehatan, pemadam kebakaran, polisi, dan badan penanggulangan bencana. Selain itu, terdapat tombol informasi yang menjelaskan tujuan dan kegunaan aplikasi ini.
+<img src="./assets/4.jpg" width="200px" alt="List Page"> List Page menampilkan daftar laporan pengaduan yang telah diajukan oleh pengguna. Di halaman ini, pengguna dapat melihat status dan detail pengaduan yang telah dilaporkan.
+<img src="./assets/3.jpg" width="200px" alt="Edit Page"> Pada Edit Page, pengguna dapat melakukan perubahan atau pembaruan laporan pengaduan. Jika laporan sudah selesai ditangani, pengguna juga dapat menghapus laporan tersebut.
+<img src="./assets/2.jpg" width="200px" alt="Map"> Di Map, pengguna akan melihat peta yang menampilkan sebaran marker dari laporan yang telah dibuat. Pengguna dapat menambahkan laporan baru dengan menekan lokasi di peta yang sesuai dengan masalah yang ingin dilaporkan.
+<img src="./assets/1.jpg" width="200px" alt="Profile"> Profil menampilkan informasi mengenai pembuat aplikasi, memberikan gambaran tentang pengembang dan latar belakang proyek ini.
 
 ## Instalasi dan Penggunaan
 1. Clone repository ini:
