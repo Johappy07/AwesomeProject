@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, ScrollView, TextInput, Button, StyleSheet, Pi
 import Geolocation from 'react-native-geolocation-service'; // Ganti dengan Geolocation Service
 
 const Createdata = () => {
-  const jsonUrl = 'http://10.55.101.173:3000/pengaduan'; // API yang digunakan emulator untuk mengakses localhost komputer
+  const jsonUrl = 'http://192.168.8.101:3000/pengaduan'; // API yang digunakan emulator untuk mengakses localhost komputer
   
   // State untuk menyimpan data formulir
   const [category, setCategory] = useState('Pengaduan');

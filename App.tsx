@@ -77,10 +77,10 @@ function App(): React.JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Nama">
-            Hayyu Rahmayani Puspitasari
+            Johanes Berchmann Juvens Junior Pareira
           </Section>
           <Section title="NIM">
-            22/497739/SV/21157
+            22/496923/SV/21050
           </Section>
           <Section title="Kelas">
             A

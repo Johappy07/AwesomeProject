@@ -23,6 +23,7 @@ export default class App extends Component {
       userLocation: null,
       newMarkerLocation: null,
       isFormVisible: false,
+      isMarkerDetailsVisible: false,
       formData: {
         id: '',
         category: '',
@@ -50,6 +51,7 @@ export default class App extends Component {
 
       Geolocation.getCurrentPosition(
         (position) => {
+          console.log('Position:', position); // log posisi yang didapat
           this.setState({ userLocation: position.coords });
         },
         (error) => {
@@ -91,7 +93,7 @@ export default class App extends Component {
   // Fungsi pengambilan data dari API
   fetchMarkers = async () => {
     try {
-      const response = await fetch('http://10.55.101.173:3000/pengaduan');
+      const response = await fetch('http://192.168.8.101:3000/pengaduan');
       if (!response.ok) {
         throw new Error('Failed to fetch markers');
       }
@@ -111,17 +113,17 @@ export default class App extends Component {
   // Method to handle map press for new marker
   onMapPress = (e) => {
     const coordinates = e.geometry?.coordinates;
-  
+
     if (Array.isArray(coordinates)) {
       const longitude = parseFloat(coordinates[0]);
       const latitude = parseFloat(coordinates[1]);
-  
+
       // Validasi koordinat
       if (isNaN(longitude) || isNaN(latitude)) {
         Alert.alert('Error', 'Invalid coordinates. Please try again.');
         return;
       }
-  
+
       this.setState({
         newMarkerLocation: { longitude, latitude },
         isFormVisible: true,
@@ -134,14 +136,13 @@ export default class App extends Component {
           location: { latitude, longitude },
         },
       });
-  
+
       console.log('New marker coordinates:', longitude, latitude);
     } else {
       console.error('Invalid coordinates:', coordinates);
       Alert.alert('Error', 'Failed to retrieve coordinates.');
     }
   };
-  
 
   // Fungsi untuk menyimpan marker baru ke API
   saveNewMarker = async () => {
@@ -152,79 +153,66 @@ export default class App extends Component {
       Alert.alert('Error', 'Please fill all fields before saving.');
       return;
     }
-  
+
     const latitude = parseFloat(formData.location.latitude);
     const longitude = parseFloat(formData.location.longitude);
-  
+
     if (isNaN(latitude) || isNaN(longitude)) {
       Alert.alert('Error', 'Invalid coordinates. Please check the location.');
       return;
     }
-  
-    // Update formData dengan nilai konversi
-    const updatedFormData = {
-      ...formData,
-      location: { latitude, longitude },
-    };
-  
-    console.log('Saving marker with data:', updatedFormData);
-  
+
+    const updatedFormData = { ...formData, location: { latitude, longitude } };
+
     try {
-      const response = await fetch('http://10.55.101.173:3000/pengaduan', {
+      const response = await fetch('http://192.168.8.101:3000/pengaduan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedFormData),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to save marker');
       }
-  
-      const newMarker = await response.json();
-      
-      // Refresh data dari server
-      this.fetchMarkers();
-  
-      this.setState({
-        isFormVisible: false,
-        newMarkerLocation: null,
-      });
-  
+
+      await this.fetchMarkers();  // Refresh markers
+      this.setState({ isFormVisible: false, newMarkerLocation: null });
       Alert.alert('Success', 'Marker has been saved successfully!');
     } catch (error) {
       console.error('Error saving marker:', error);
       Alert.alert('Error', 'Failed to save marker.');
     }
   };
-  
-  
 
-  // Fungsi untuk merender marker
+  // Inside your renderMarkers method, add onPress to the marker
   renderMarkers() {
     const { pengaduanData } = this.state;
-  
+
     return pengaduanData.map((pengaduan) => {
       const longitude = parseFloat(pengaduan.longitude);
       const latitude = parseFloat(pengaduan.latitude);
-  
+
       if (isNaN(longitude) || isNaN(latitude)) {
         console.warn(`Invalid coordinates for marker ID: ${pengaduan.id}`);
         return null; // Skip invalid markers
       }
-  
+
       return (
         <MapLibreGL.PointAnnotation
           key={pengaduan.id}
           id={String(pengaduan.id)}
           coordinate={[longitude, latitude]}
+          onPress={() => this.handleMarkerPress(pengaduan)} // Add onPress handler
         />
       );
     });
   }
-  
+
+
 
   render() {
     const { isFormVisible, formData } = this.state;
+    const { isMarkerDetailsVisible, DataView, userLocation } = this.state;
 
     return (
       <View style={styles.page}>
@@ -234,43 +222,69 @@ export default class App extends Component {
           styleURL={`https://api.maptiler.com/maps/streets-v2/style.json?key=z52tCgMGETEry417QpMQ`}
           onPress={this.onMapPress}
         >
-          <MapLibreGL.Camera zoomLevel={9} centerCoordinate={[106.982112, -6.234213]} />
+          <MapLibreGL.Camera zoomLevel={12} centerCoordinate={[106.982112, -6.234213]} />
+          {/* Menambahkan marker geolokasi pengguna */}
+          {userLocation && (
+            <MapLibreGL.UserLocation
+              visible={true}
+              renderMode="normal"
+              showHeadingIndicator={true}
+              style={styles.userLocation}
+            />
+          )}
+
           {this.renderMarkers()}
         </MapLibreGL.MapView>
 
         {/* Form untuk input data marker */}
         <Modal visible={isFormVisible} animationType="slide" transparent>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Add New Marker</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Category"
-              value={formData.category}
-              onChangeText={(text) => this.setState({ formData: { ...formData, category: text } })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Title"
-              value={formData.title}
-              onChangeText={(text) => this.setState({ formData: { ...formData, title: text } })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Report"
-              value={formData.report}
-              onChangeText={(text) => this.setState({ formData: { ...formData, report: text } })}
-            />
-            <TouchableOpacity style={styles.saveButton} onPress={this.saveNewMarker}>
-              <Text style={styles.saveButtonText}>Save</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => this.setState({ isFormVisible: false })}
-            >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
+  <View style={styles.modalContainer}>
+    <View style={styles.card}>
+      <Text style={styles.modalTitle}>Tambah Laporan Baru</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Kategori"
+        value={formData.category}
+        onChangeText={(text) => this.setState({ formData: { ...formData, category: text } })}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Judul Laporan"
+        value={formData.title}
+        onChangeText={(text) => this.setState({ formData: { ...formData, title: text } })}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Isi Laporan"
+        value={formData.report}
+        onChangeText={(text) => this.setState({ formData: { ...formData, report: text } })}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Latitude"
+        value={formData.location.latitude?.toString() || ''}
+        editable={false}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Longitude"
+        value={formData.location.longitude?.toString() || ''}
+        editable={false}
+      />
+
+      <TouchableOpacity style={styles.saveButton} onPress={this.saveNewMarker}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.cancelButton}
+        onPress={() => this.setState({ isFormVisible: false })}
+      >
+        <Text style={styles.cancelButtonText}>Cancel</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
+
       </View>
     );
   }
@@ -279,9 +293,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   map: {
     flex: 1,
@@ -291,36 +303,62 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  card: {
+    backgroundColor: 'white',
     padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    maxWidth: 400,
   },
   modalTitle: {
-    fontSize: 20,
-    color: '#fff',
-    marginBottom: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   input: {
-    backgroundColor: '#fff',
-    padding: 10,
-    width: '80%',
-    marginBottom: 15,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
     borderRadius: 5,
   },
   saveButton: {
-    backgroundColor: '#58c7ff',
+    backgroundColor: '#4CAF50',
     padding: 10,
     borderRadius: 5,
-    marginBottom: 10,
+    alignItems: 'center',
   },
   saveButtonText: {
-    color: '#fff',
+    color: 'white',
+    fontSize: 16,
   },
   cancelButton: {
-    backgroundColor: '#ff5c5c',
+    backgroundColor: '#f44336',
     padding: 10,
     borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
   },
   cancelButtonText: {
-    color: '#fff',
+    color: 'white',
+    fontSize: 16,
+  },
+  detailsText: {
+    fontSize: 16,
+    marginVertical: 5,
+  },
+  closeButton: {
+    backgroundColor: '#008CBA',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
