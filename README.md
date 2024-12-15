@@ -16,11 +16,11 @@ Tujuan utama dari aplikasi ini adalah untuk membantu pemerintah Kota Bekasi dala
 - **Icon** dari FontAwesome
 
 ## Tangkapan Layar Komponen Penting Produk
-- ![Home Page](./assets/5.jpg){:width="300px"}
-- ![List Page](./assets/4.jpg){:width="300px"}
-- ![Edit Page](./assets/3.jpg){:width="300px"}
-- ![Map](./assets/2.jpg){:width="300px"}
-- ![Profile](./assets/1.jpg){:width="300px"}
+- ![Home Page](./assets/5.jpg){:width="100px"}
+- ![List Page](./assets/4.jpg){:width="100px"}
+- ![Edit Page](./assets/3.jpg){:width="100px"}
+- ![Map](./assets/2.jpg){:width="100px"}
+- ![Profile](./assets/1.jpg){:width="100px"}
 
 ## Instalasi dan Penggunaan
 1. Clone repository ini:
